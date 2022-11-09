@@ -1,94 +1,116 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Socket.IO chat</title>
-    <style>
-        body {
-            margin: 0;
-            padding-bottom: 3rem;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
 
-        #form {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 0.25rem;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            height: 3rem;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
+* {
+  box-sizing: border-box;
+}
 
-        #input {
-            border: none;
-            padding: 0 1rem;
-            flex-grow: 1;
-            border-radius: 2rem;
-            margin: 0.25rem;
-        }
+h2 {
+  text-align: center;
+}
 
-        #input:focus {
-            outline: none;
-        }
+p {
+  text-align: center;
+}
 
-        #form>button {
-            background: #333;
-            border: none;
-            padding: 0 1rem;
-            margin: 0.25rem;
-            border-radius: 3px;
-            outline: none;
-            color: #fff;
-        }
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
 
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
 
-        #messages>li {
-            padding: 0.5rem 1rem;
-        }
+input[type=submit] {
+  background-color: #1c48e7;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
 
-        #messages>li:nth-child(odd) {
-            background: #efefef;
-        }
-    </style>
+input[type=submit]:hover {
+  background-color: #1584eb;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  margin-left: 8cm;
+  margin-right: 8cm;
+  margin-top: 1cm;
+}
+
+.col-25 {
+  float: left;
+  width: 20%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 80%;
+  margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
 </head>
-
 <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+
+<h2>Registro al chat</h2>
+<p>Antes de ingresar se requiere un nombre de usuario para identificarse</p>
+
+<div class="container">
+  <form>
+    <div class="row">
+      <div class="col-25">
+        <label for="user">Nombre de Usuario</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="username" name="user" placeholder="Nombre para el chat">
+      </div>
+    </div>
+    <div class="row">
+    <p> </p>
+      <input type="submit" value="Continuar" onclick="submitedName(event)">
+    </div>
+  </form>
+</div>
 </body>
-<script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io();
-
-  var messages = document.getElementById('messages');
-  var form = document.getElementById('form');
-  var input = document.getElementById('input');
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
-    }
-  });
-
-  socket.on('chat message', function(msg) {
-    var item = document.createElement('li');
-    item.textContent = msg;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  });
+  function submitedName(e) {
+    e.preventDefault()
+  var user = document.getElementById("username");
+ // user = user.textContent;
+  user = user.value;
+  alert(user);
+  sessionStorage.setItem("user", user);
+  window.location.href = "/chat";
+}
 </script>
-
 </html>
