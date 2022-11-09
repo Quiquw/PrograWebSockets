@@ -3,10 +3,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 
-var users = [];
-var message = "Nombre de usuario";
-var name = "seaa";
-var i = 0;
+var awa = "Nombre de usuario: ";
 
  app.get('/', (req, res) => {
    res.sendFile(__dirname + '/index.html');
@@ -17,17 +14,14 @@ var i = 0;
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
- // name = window.prompt(message, default);
-  users.push(name);
-  console.log(users);
+ // var userName = sessionStorage.getItem('appUsername');
+  console.log(awa + 'se conecto');
   socket.on('chat message', msg => {
     console.log('message: ' + msg);
     io.emit('chat message', msg);
   });
   socket.on('disconnect', () => { 
-    console.log('user disconnected');
-    users.pop();
+    console.log('se desconecto');
   });
 });
 

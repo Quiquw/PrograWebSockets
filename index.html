@@ -105,11 +105,12 @@ input[type=submit]:hover {
 <script>
   function submitedName(e) {
     e.preventDefault()
+  sessionStorage.clear();  
   var user = document.getElementById("username");
  // user = user.textContent;
   user = user.value;
   alert(user);
-  sessionStorage.setItem("user", user);
+  sessionStorage.setItem('appUsername', user);
   window.location.href = "/chat";
 }
 </script>
