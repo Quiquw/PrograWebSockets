@@ -83,29 +83,28 @@
     if (input.value) {
         var userName = sessionStorage.getItem('appUsername');
         var userAndMessage = userName + ': ' + input.value;
-      socket.emit('chat message', userAndMessage);
+      socket.emit('mensajeGeneral', userAndMessage);
      // socket.emit('user of message', userName);
       input.value = '';
-      checkUser(userName);
+    //  checkUser(userName);
       console.log(usersOnline);
     }
   });
 
-  socket.on('user of message', function(usrNm){
-    console.log(usrNm);
-    var item = document.createElement('li');
-    item.textContent = usrNm;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  });
+//   socket.on('mensaje general2', function(usrNm){
+//     console.log(usrNm);
+//     var item = document.createElement('li');
+//     item.textContent = usrNm;
+//     messages.appendChild(item);
+//     window.scrollTo(0, document.body.scrollHeight);
+//   });
 
-  socket.on('chat message', function(msg) {
+  socket.on('mensajeGeneral', function(userAndMessage) {
     var item = document.createElement('li');
-    item.textContent = msg;
+    item.textContent = userAndMessage;
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
-    //console.log(msg);
-//console.log(uwu)
+    console.log(userAndMessage);
   });
 
   var addUser = true;

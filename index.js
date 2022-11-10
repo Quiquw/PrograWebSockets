@@ -23,7 +23,7 @@ var sockets = [];
       });
 
        socket.on('mensaje general', (msg) => {
-        console.log("mensaje en el chat general: " + msg);
+        console.log("mensaje en el chat general -- " + msg);
         socket.broadcast.emit('mensaje general', msg);
       });
   
