@@ -22,9 +22,9 @@ var sockets = [];
    // array sockets conectados
       });
 
-       socket.on('mensaje general', (msg) => {
+       socket.on('mensajeGeneral', (msg) => {
         console.log("mensaje en el chat general -- " + msg);
-        socket.broadcast.emit('mensaje general', msg);
+        socket.broadcast.emit('mensajeGeneral', msg);
       });
   
 
