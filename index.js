@@ -17,7 +17,9 @@ var sockets = [];
     io.on('connection', (socket) => {
       socket.on('user connection', (userAppName) => {
   //      if (socket not in stack) {
+          socket.broadcast.emit('newUser', { id: socket.id, username: username });
           sockets.push({ id: socket.id, userAppName: userAppName });
+          console.log(sockets);
    //     }
    // array sockets conectados
       });
@@ -26,9 +28,14 @@ var sockets = [];
         console.log("mensaje en el chat general -- " + msg);
         socket.broadcast.emit('mensajeGeneral', msg);
       });
+
+      socket.on('mensajeNoGeneral', (msg2) => {
+        console.log("mensaje en el chat NO general -- " + msg2);
+        socket.broadcast.emit('mensajeNoGeneral', msg2);
+      });
   
 
-    socket.on('mensaje directo', ({ privateMessage, reciever }) => {
+    socket.on('mensajeDirecto', ({ privateMessage, reciever }) => {
       console.log("mendaje directo: " + privateMessage);
       socket.to(reciever).emit("mensaje directo", privateMessage);
     });
@@ -39,6 +46,10 @@ var sockets = [];
         // array sockets conectados
   });
 });
+
+function refreshUsers (){
+}
+
 
 http.listen(port, () => {
   console.log(`Socket.IO server running at http://localhost:${port}/`);
