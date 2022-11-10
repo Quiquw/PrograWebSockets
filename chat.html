@@ -85,8 +85,6 @@
   var form = document.getElementById('form');
   var input = document.getElementById('input');
   var userInput = document.getElementById('input2');
-  var usersOnline = [];
-  var storedUsersOnline = [];
 
 // idea for direct message
 //const sentence = 'sendTo: SEAA The quick brown fox jumps over the lazy dog.';
@@ -110,7 +108,7 @@
       console.log(usersOnline);
     }
         } else if (userInput.value !== '') {
-            if (input.value) {        console.log('llega');
+            if (input.value) { 
         var userName = sessionStorage.getItem('appUsername');
         var theUserto = userInput.value;
         var userAndMessage = theUserto + ' '+userName + ': ' + input.value;
@@ -121,16 +119,8 @@
 
   });
 
-//   socket.on('mensaje general2', function(usrNm){
-//     console.log(usrNm);
-//     var item = document.createElement('li');
-//     item.textContent = usrNm;
-//     messages.appendChild(item);
-//     window.scrollTo(0, document.body.scrollHeight);
-//   });
 
   socket.on('mensajeGeneral', function(userAndMessage) {
-    console.log('mensajin GGGGGGeneral');
     var item = document.createElement('li');
     item.textContent = userAndMessage;
     messages.appendChild(item);
@@ -142,48 +132,16 @@
 
   socket.on('mensajeNoGeneral', function(userAndMessage) {
     var userName = sessionStorage.getItem('appUsername');
-    console.log('mensajin no general');
-    console.log(userName + ' was username and usermessage is ' + userAndMessage);
     miValidation = userAndMessage.trimStart().split(" ")[0];
-   // miValidation = miValidation.slice(0, -1);
-    console.log('1')
-    console.log(userAndMessage);
-    console.log(miValidation);
-    console.log(userName);
-   // console.log(theUserto);
-    console.log('3')
     if (userName === miValidation){
     userAndMessage = userAndMessage.substring(userAndMessage.indexOf(' ') + 1);
-    console.log('trim ' + userAndMessage);
     var item = document.createElement('li');
     item.textContent = userAndMessage;
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
-    console.log(userAndMessage);
     }
   });
 
   var addUser = true;
-
-  function checkUser(appUser){
-    storedUsersOnline = JSON.parse(localStorage.getItem("usersOnline"));
-    for(var i=0; i<storedUsersOnline.length; i++){  
-        if(appUser === storedUsersOnline[i]){
-            addUser = false;
-            console.log(addUser);
-        }
-    }
-    if (addUser) {
-        pushUser(appUser);
-    }
-  }
-
-  function pushUser(appUser) {
-    usersOnline[1] = appUser;
-    localStorage.setItem("usersOnline", JSON.stringify(usersOnline));
-  }
-
-
-
 </script>
 </html>
