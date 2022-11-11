@@ -107,9 +107,8 @@ input[type=submit]:hover {
     e.preventDefault()
   sessionStorage.clear();  
   var user = document.getElementById("username");
- // user = user.textContent;
   user = user.value;
-  alert(user);
+  alert('Your username is: ' + user);
   sessionStorage.setItem('appUsername', user);
   window.location.href = "/chat";
 }

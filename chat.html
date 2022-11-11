@@ -80,32 +80,24 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io();
-
   var messages = document.getElementById('messages');
   var form = document.getElementById('form');
   var input = document.getElementById('input');
   var userInput = document.getElementById('input2');
+  var userNames = sessionStorage.getItem('appUsername');
 
-// idea for direct message
-//const sentence = 'sendTo: SEAA The quick brown fox jumps over the lazy dog.';
-//const word = 'sendTo:';
-//console.log(`The word "${word}" ${sentence.includes(word) ? 'is' : 'is not'} in the sentence`);
-// expected output: "The word "fox" is in the sentence"
+  socket.emit("user connection", userNames);
+  
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    // console.log(userInput.value);
-    // console.log(input.value);
     if (userInput.value === ''){
         if (input.value) {
         var userName = sessionStorage.getItem('appUsername');
         var userAndMessage = userName + ': ' + input.value;
       socket.emit('mensajeGeneral', userAndMessage);
-     // socket.emit('user of message', userName);
       input.value = '';
       userInput.value = '';
-    //  checkUser(userName);
-      console.log(usersOnline);
     }
         } else if (userInput.value !== '') {
             if (input.value) { 
@@ -119,8 +111,7 @@
 
   });
 
-
-  socket.on('mensajeGeneral', function(userAndMessage) {
+  socket.on('disconnected', function(userAndMessage) {
     var item = document.createElement('li');
     item.textContent = userAndMessage;
     messages.appendChild(item);
@@ -129,6 +120,14 @@
   });
 
   var miValidation = '';
+
+  socket.on('mensajeGeneral', function(userAndMessage) {
+    var item = document.createElement('li');
+    item.textContent = userAndMessage;
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+    console.log(userAndMessage);
+  });
 
   socket.on('mensajeNoGeneral', function(userAndMessage) {
     var userName = sessionStorage.getItem('appUsername');
@@ -141,7 +140,5 @@
     window.scrollTo(0, document.body.scrollHeight);
     }
   });
-
-  var addUser = true;
 </script>
 </html>
